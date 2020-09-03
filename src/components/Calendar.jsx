@@ -25,22 +25,40 @@ const useStyles = makeStyles((theme) => ({
 const Calendar = ({ sortBy, getAccessToken, setError }) => {
   const classes = useStyles();
   const [events, setEvents] = useState([]);
+  
+  const [emptyListMessage, setEmptyListMessage] = useState('')
+
 
   useEffect(() => {
+    let isCancelled = false;
     async function fetchEvents() {
       try {
         // Get the user's access token
-        var accessToken = await getAccessToken(config.scopes);
-        // Get the user's events
-        var newEvents = await getEvents(accessToken);
-        // Update the array of events in state
-        setEvents(newEvents.value);
+        const accessToken = await getAccessToken(config.scopes);
+        let newEvents;
+        if (!isCancelled) {
+          // Get the user's events
+          newEvents = await getEvents(accessToken);
+        }
+        if (!isCancelled) {
+          // Update the array of events in state
+          setEvents(newEvents.value);
+          if (!newEvents.value.length) {
+            setEmptyListMessage('No events scheduled yet..')
+          }
+        }
       } catch (err) {
-        setError("ERROR", JSON.stringify(err));
+        if (!isCancelled) {
+          setError("ERROR", JSON.stringify(err));
+        }
       }
     }
     fetchEvents();
-  }, []);
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [getAccessToken, setError]);
 
   const sortEvents = (sortType, items) => {
     if (sortType === "title") {
@@ -56,7 +74,7 @@ const Calendar = ({ sortBy, getAccessToken, setError }) => {
     }
   };
 
-  // console.log(sortEvents("title", events));
+  
 
   return (
     <div>
@@ -90,7 +108,7 @@ const Calendar = ({ sortBy, getAccessToken, setError }) => {
           </div>
         ) : (
           <Typography variant="h4" component="p" align="center">
-            No events scheduled for today..
+            {emptyListMessage}
           </Typography>
         )}
       </div>
