@@ -29,6 +29,6 @@ export async function getEvents(accessToken) {
     .select("subject,start,end,location")
     .orderby("createdDateTime DESC")
     .get();
-  console.log(JSON.parse(JSON.stringify(events)));
+  // console.log(JSON.parse(JSON.stringify(events)));
   return events;
 }

@@ -15,6 +15,8 @@ const View = () => {
   const [currItem, setCurrItem] = useState(playList[0]);
 
   useEffect(() => {
+    let timer
+
     const goToNextItem = () => {
       if (playList.indexOf(currItem) === playList.length - 1) {
         setCurrItem(playList[0]);
@@ -24,20 +26,23 @@ const View = () => {
     };
 
     if (currItem && currItem.duration !== 0) {
-      setTimeout(() => {
+      timer = setTimeout(() => {
         goToNextItem();
       }, currItem.duration * 1000);
     } else {
       goToNextItem();
     }
     
-  }, [currItem, playList]);
+    return () =>{
+      clearTimeout(timer)
+    } 
+   }, [currItem, playList]);
 
   return (
     <div>
       {playList.length && currItem.duration !== '0' ? (
         currItem.type === "Events" ? (
-          <Calendar />
+          <Calendar sortBy={currItem.sortBy}/>
         ) : currItem.type === "Text" ? (
           <Text text={currItem.text} />
         ) : currItem.type === "Image" ? (

@@ -4,7 +4,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ListItemText from "@material-ui/core/ListItemText";
-import { makeStyles, Theme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
@@ -35,9 +35,7 @@ import { v4 as uuidv4 } from "uuid";
 import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 
-const SortableItem = SortableElement(({ value }) => (
-  <div>{value}</div>
-));
+const SortableItem = SortableElement(({ value }) => <div>{value}</div>);
 
 const SortableList = SortableContainer(({ items }) => {
   return (
@@ -59,6 +57,8 @@ const itemIcon = (type) => {
       return <TextFieldsIcon />;
     case "Events":
       return <TodayIcon />;
+    default:
+      break;
   }
 };
 
@@ -72,6 +72,8 @@ const itemText = (item) => {
       return item.text ? item.text.substring(0, 15) + "..." : "";
     case "Events":
       return "";
+    default:
+      break;
   }
 };
 const useStyles = makeStyles((theme) => ({
@@ -151,8 +153,6 @@ const actions = [
   { icon: <TodayIcon />, name: "Events" },
 ];
 
-
-
 const Admin = ({ AuthPanel }) => {
   const classes = useStyles();
   const [playList, setPlayList] = useState(
@@ -187,7 +187,7 @@ const Admin = ({ AuthPanel }) => {
     setEditedItem(item);
     setDialogType(item.type);
     setDuration(item.duration);
-    setSortBy(item.sortBy)
+    setSortBy(item.sortBy);
 
     if (item.type === "Image" || item.type === "Video") {
       setTextInput(item.url);
@@ -202,7 +202,7 @@ const Admin = ({ AuthPanel }) => {
     setDialog(false);
     setTextInput("");
     setDuration("5");
-    setSortBy('time')
+    setSortBy("time");
     setTimeout(() => {
       setSpeedDial(false);
     }, 300);
@@ -213,8 +213,6 @@ const Admin = ({ AuthPanel }) => {
     setDialogType(type);
     setDialog(true);
   };
-
-  
 
   const onHideItem = (item) => {
     const idx = playList.indexOf(item);
@@ -234,7 +232,7 @@ const Admin = ({ AuthPanel }) => {
         duration: duration,
         url: type === "Image" || type === "Video" ? textInput : "",
         text: type === "Text" ? textInput : "",
-        sortBy: type === 'Events' ?  sortBy : null,
+        sortBy: type === "Events" ? sortBy : null,
       };
       let newPlayList = [...playList, newItem];
       localStorage.setItem("playList", JSON.stringify(newPlayList));
@@ -248,11 +246,11 @@ const Admin = ({ AuthPanel }) => {
         type: editedItem.type,
         duration: duration,
         url:
-        editedItem.type === "Image" || editedItem.type === "Video"
-        ? textInput
-        : "",
+          editedItem.type === "Image" || editedItem.type === "Video"
+            ? textInput
+            : "",
         text: editedItem.type === "Text" ? textInput : "",
-        sortBy: editedItem.type === 'Events' ?  sortBy : null,
+        sortBy: editedItem.type === "Events" ? sortBy : null,
       };
       let currPlayList = [...playList];
       currPlayList[idx] = newEditedItem;
@@ -272,7 +270,7 @@ const Admin = ({ AuthPanel }) => {
   };
 
   const handleChangeSortBy = (e) => {
-    setSortBy(e.target.value)
+    setSortBy(e.target.value);
   };
 
   return (
