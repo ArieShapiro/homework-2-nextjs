@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getEvents } from "./Calendar/GraphService";
-import { config } from "./Calendar/Config";
-import withAuthProvider from "./Calendar/AuthProvider";
+import { getEvents } from "../Auth/GraphService";
+import { config } from "../Auth/Config";
+import withAuthProvider from "../Auth/AuthProvider";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";

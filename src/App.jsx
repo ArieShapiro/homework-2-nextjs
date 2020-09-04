@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import View from "./pages/View";
 import Admin from "./pages/Admin";
 import { PlayListContext } from "./contexts/PlayListContext";
-import withAuthProvider from "./components/Calendar/AuthProvider";
-import ErrorMessage from "./components/Calendar/ErrorMessage";
+import withAuthProvider from "./Auth/AuthProvider";
+import ErrorMessage from "./Auth/ErrorMessage";
 import AuthPanel from "./components/AuthPanel";
 
 
