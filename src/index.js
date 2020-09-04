@@ -12,6 +12,6 @@ import App from "./App";
 // 2. Initially I planed to use a central store with the contact API, but later
 //    decided to store the data in the LocalStorage, in order for it to be saved,
 //    since the doesn't have a baclend currently. I still left the PlayListcontext.js
-//    for later use when we gonna have a backend
+//    for later use when we gonna have a backend.
 
 ReactDOM.render(<App />, document.getElementById("root"));
