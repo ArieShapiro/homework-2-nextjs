@@ -2,15 +2,11 @@ import React, { Component } from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import View from "./pages/View";
 import Admin from "./pages/Admin";
-import { PlayListContext } from "./contexts/PlayListContext";
 import withAuthProvider from "./Auth/AuthProvider";
 import ErrorMessage from "./Auth/ErrorMessage";
 import AuthPanel from "./components/AuthPanel";
 
-
 class App extends Component {
-  static contextType = PlayListContext;
-
   render() {
     let error = null;
     if (this.props.error) {
@@ -21,8 +17,6 @@ class App extends Component {
         />
       );
     }
-    const { playList } = this.context;
-    localStorage.setItem("playList", JSON.stringify(playList));
     return (
       <Router>
         <div>
@@ -30,7 +24,7 @@ class App extends Component {
           <Route
             exact
             path="/"
-            render={(props) =>
+            render={() =>
               this.props.isAuthenticated ? (
                 <View />
               ) : (
@@ -49,7 +43,7 @@ class App extends Component {
           <Route
             exact
             path="/admin"
-            render={(props) =>
+            render={() =>
               this.props.isAuthenticated ? (
                 <Admin
                   AuthPanel={

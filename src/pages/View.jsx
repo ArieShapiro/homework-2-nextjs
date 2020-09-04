@@ -3,19 +3,14 @@ import Text from "../components/Text";
 import Calendar from "../components/Calendar";
 import Image from "../components/Image";
 import Video from "../components/Video";
-// import { PlayListContext } from "../contexts/PlayListContext";
 import Typography from "@material-ui/core/Typography";
 
-
 const View = () => {
-  // const { playList } = useContext(PlayListContext);
-  const [playList] = useState(
-    JSON.parse(localStorage.getItem("playList"))
-  );
+  const [playList] = useState(JSON.parse(localStorage.getItem("playList")));
   const [currItem, setCurrItem] = useState(playList[0]);
 
   useEffect(() => {
-    let timer
+    let timer;
 
     const goToNextItem = () => {
       if (playList.indexOf(currItem) === playList.length - 1) {
@@ -32,17 +27,17 @@ const View = () => {
     } else {
       goToNextItem();
     }
-    
-    return () =>{
-      clearTimeout(timer)
-    } 
-   }, [currItem, playList]);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [currItem, playList]);
 
   return (
     <div>
-      {playList.length && currItem.duration !== '0' ? (
+      {playList.length && currItem.duration !== "0" ? (
         currItem.type === "Events" ? (
-          <Calendar sortBy={currItem.sortBy}/>
+          <Calendar sortBy={currItem.sortBy} />
         ) : currItem.type === "Text" ? (
           <Text text={currItem.text} />
         ) : currItem.type === "Image" ? (
